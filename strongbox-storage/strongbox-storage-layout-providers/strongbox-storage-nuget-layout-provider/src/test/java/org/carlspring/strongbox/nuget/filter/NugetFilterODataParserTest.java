@@ -120,6 +120,7 @@ public class NugetFilterODataParserTest
                                                                 "1.0.1",
                                                                 "1.0.2"})
                                 Path artifactPath)
+
     {
         Selector<ArtifactEntry> selector = new Selector<>(ArtifactEntry.class);
 
@@ -136,4 +137,5 @@ public class NugetFilterODataParserTest
         QueryTemplate<String, ArtifactEntry> queryTemplate = new OQueryTemplate<>(entityManager);
         assertThat(queryTemplate.select(selector)).isEqualTo("Org.Carlspring.Strongbox.Nuget.Test.Nfpt_-test");
     }
+
 }

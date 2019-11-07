@@ -11,6 +11,7 @@ import org.carlspring.strongbox.repository.RepositoryManagementStrategy;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -23,13 +24,15 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author carlspring
+ * @author grantfar
  */
 @Component
 public class PypiLayoutProvider
         extends AbstractLayoutProvider<PypiArtifactCoordinates>
 {
     private static final Logger logger = LoggerFactory.getLogger(PypiLayoutProvider.class);
-
+    public static final String SDISTS_METADATA = "setup.py";
+    public static final String WHEEL_METADATA = ".dist-info";
     public static final String ALIAS = PypiArtifactCoordinates.LAYOUT_NAME;
 
     @Inject
@@ -53,14 +56,16 @@ public class PypiLayoutProvider
 
     public boolean isArtifactMetadata(RepositoryPath path)
     {
-        // TODO: Fix
-        return false;
+        return path.getFileName().toString().equals(SDISTS_METADATA) ||
+        path.subpath(path.getNameCount()-2,path.getNameCount()-2).toString().endsWith(WHEEL_METADATA);
     }
 
-    public boolean isMetadata(RepositoryPath path)
+    public boolean isMetadata(RepositoryPath path) throws IOException
     {
-        // TODO: Fix
-        return false;
+        return isArtifactMetadata(path) ||
+               Files.probeContentType(path).equalsIgnoreCase("text/html") ||
+               Files.probeContentType(path).equalsIgnoreCase("application/json");
+
     }
     
     @Override
