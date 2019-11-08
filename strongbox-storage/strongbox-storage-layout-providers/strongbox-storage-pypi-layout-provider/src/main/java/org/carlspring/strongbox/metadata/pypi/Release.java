@@ -2,7 +2,9 @@ package org.carlspring.strongbox.metadata.pypi;
 
 import java.util.List;
 import java.util.Map;
-
+/**
+ * @author grantfar
+ */
 public class Release
 {
     public List<Map<String,String>> digests;

@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * @author grantfar
+ */
 public class Info
 {
     public static final String[] CLASSIFIERS = {"Development Status :: 1 - Planning",
@@ -722,11 +725,19 @@ public class Info
     private String platform;
     private String project_url;
     private Map<String,String> project_urls;
+    private String release_url;
+    private Boolean requires_dist;
+    private Boolean requires_python;
+    private String summary;
+    private String version;
 
-    private void AddClassifier(String classifier)
+
+    private void AddClassifier(String classifier) throws invalidClassifierException
     {
         if(isValidClassifier(classifier))
             classifiers.add(classifier);
+        else
+            throw new invalidClassifierException("\"" + classifier + "\" is not a valid classifier");
     }
 
     /**
@@ -770,5 +781,13 @@ public class Info
             }
         }
         return classifiersHash.contains(classifier);
+    }
+
+    public class invalidClassifierException extends Exception
+    {
+        public invalidClassifierException(String errorMessage)
+        {
+            super(errorMessage);
+        }
     }
 }

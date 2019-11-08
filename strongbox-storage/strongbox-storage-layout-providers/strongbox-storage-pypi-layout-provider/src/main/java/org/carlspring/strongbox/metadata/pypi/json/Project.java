@@ -4,7 +4,9 @@ import org.carlspring.strongbox.metadata.pypi.Info;
 import org.carlspring.strongbox.metadata.pypi.Release;
 
 import java.util.Map;
-
+/**
+ * @author grantfar
+ */
 public class Project
 {
     public Info info;
